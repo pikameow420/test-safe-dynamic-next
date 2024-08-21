@@ -1,0 +1,16 @@
+{
+    "short_name": "Next WAGMI",
+    "name": "Next Wagmi Safe App",
+    "description": "Describe your WAGMi Safe App here",
+    "icons": [
+      {
+        "src": "logo.png",
+        "sizes": "any",
+        "type": "image/svg+xml"
+      }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+  }
