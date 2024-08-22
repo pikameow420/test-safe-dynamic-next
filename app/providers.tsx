@@ -19,6 +19,7 @@ export function Providers(props: { children: ReactNode }) {
       settings={{
         environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID || "",
         walletConnectors: [EthereumWalletConnectors],
+        initialAuthenticationMode: 'connect-only',
       }}
     >
       <WagmiProvider config={config}>
