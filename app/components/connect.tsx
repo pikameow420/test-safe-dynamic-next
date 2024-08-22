@@ -20,6 +20,7 @@ export function Connect() {
   const { connect, connectors, error } = useConnect();
   const { isConnecting, connector: activeConnector, address } = useAccount();
   const { disconnect } = useDisconnect();
+
   const { data: txGasEstimate } = useEstimateGas({
     to: "0x000000000000000000000000000000000000beef",
     value: BigInt("0"),
@@ -29,7 +30,7 @@ export function Connect() {
 
   const abi = parseAbi([
     "function approve(address, uint256) returns (bool)",
-    "function transferFrom(address, address, uint256) returns (bool)",
+    "function transfer(address, uint256) returns (bool)",
   ]);
 
   const { data } = useSimulateContract({
@@ -48,6 +49,7 @@ export function Connect() {
 
   const { writeContract } = useWriteContract();
   const { writeContracts } = useWriteContracts();
+
   const SENDER_ADDRESS = address;
   const RECIPIENT_ADDRESS = "0xA8E6908f9866a4Ca44434EcC8cE3cd0A5F6Eb18b";
 
@@ -56,12 +58,24 @@ export function Connect() {
       <div>
         {activeConnector && (
           <>
-            <button className="bg-white p-4 mx-2" onClick={() => disconnect()}>
+            <button
+              className="bg-black border border-white text-white p-4 mx-2 rounded-md hover:bg-gray-800 transition-colors"
+              onClick={() => disconnect()}
+            >
               Disconnect from {activeConnector.name}
             </button>
-            <button onClick={() => writeContract(data!.request)}>Mint</button>
+            
+            {/* Mint Transaction */}
+            <button 
+              className="bg-blue-500 text-white p-4 mx-2 rounded-md hover:bg-blue-600 transition-colors"
+              onClick={() => writeContract(data!.request)}
+            >
+              Mint
+            </button>
+            
+            {/* Test Send Transaction : (view in events in EtherScan) */}
             <button
-              className="bg-cyan-500 mx-5"
+              className="bg-cyan-500 text-white p-4 mx-2 rounded-md hover:bg-cyan-600 transition-colors"
               onClick={() =>
                 sendTransactionAsync?.({
                   gas: txGasEstimate,
@@ -72,8 +86,10 @@ export function Connect() {
             >
               Test send transaction
             </button>
+
+            {/* Batch transaction */}
             <button
-              className="bg-cyan-400 p-4"
+              className="bg-red-400 text-white p-4 mx-2 rounded-md hover:bg-red-500 transition-colors"
               onClick={() =>
                 writeContracts({
                   contracts: [
@@ -87,11 +103,7 @@ export function Connect() {
                       address: "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
                       abi,
                       functionName: "transferFrom",
-                      args: [
-                        SENDER_ADDRESS,
-                        RECIPIENT_ADDRESS,
-                        parseUnits("10", -6),
-                      ],
+                      args: [RECIPIENT_ADDRESS, parseUnits("10", -6)],
                     },
                   ],
                 })
@@ -102,17 +114,9 @@ export function Connect() {
           </>
         )}
 
-        {connectors
-          .filter((x) => x.id !== activeConnector?.id)
-          .map((x) => (
-            <button key={x.id} onClick={() => connect({ connector: x })}>
-              {x.name}
-              {isConnecting && " (connecting)"}
-            </button>
-          ))}
       </div>
 
-      {error && <div>{error.message}</div>}
+      {error && <div className="text-red-500 mt-4">{error.message}</div>}
     </div>
   );
 }

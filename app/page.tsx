@@ -10,7 +10,6 @@ import { useAutoConnect } from "./useAutoConnect";
 import { Account, Connect, NetworkSwitcher } from "./components";
 
 export default function Main() {
-
   const { address } = useAccount();
 
   return (
@@ -22,10 +21,10 @@ export default function Main() {
           </div>
         </div>
         <h1 className="text-4xl font-bold mb-4">Testing Safe Connectors</h1>
-        <Connect/>
+        <Connect />
         {address && (
-        <>
-          <Account />
+          <>
+            <Account />
           </>
         )}
       </div>
