@@ -13,18 +13,34 @@ import {
 import { useAutoConnect } from "../useAutoConnect";
 import { useWriteContracts } from "wagmi/experimental";
 import { parseAbi, parseUnits } from "viem";
+import { useSendUSDC } from "../useSendUSDC";
+import { useState } from "react";
 
 export function Connect() {
   useAutoConnect();
 
+
   const { connect, connectors, error } = useConnect();
   const { isConnecting, connector: activeConnector, address } = useAccount();
   const { disconnect } = useDisconnect();
+  const { sendUSDC, isPending, isError } = useSendUSDC()
+  const [usdcAmount, setUsdcAmount] = useState('')
+
 
   const { data: txGasEstimate } = useEstimateGas({
     to: "0x000000000000000000000000000000000000beef",
     value: BigInt("0"),
   });
+
+  const handleSendUSDC = async () => {
+    try {
+      await sendUSDC(usdcAmount)
+      console.log('USDC sent successfully!')
+      setUsdcAmount('')
+    } catch (error) {
+      console.error(error instanceof Error ? error.message : 'Transaction failed')
+    }
+  }
 
   const { sendTransactionAsync } = useSendTransaction();
 
@@ -48,10 +64,8 @@ export function Connect() {
   });
 
   const { writeContract } = useWriteContract();
-  const { writeContracts } = useWriteContracts();
 
-  const SENDER_ADDRESS = address;
-  const RECIPIENT_ADDRESS = "0xA8E6908f9866a4Ca44434EcC8cE3cd0A5F6Eb18b";
+
 
   return (
     <div>
@@ -88,29 +102,22 @@ export function Connect() {
             </button>
 
             {/* Batch transaction */}
-            <button
-              className="bg-red-400 text-white p-4 mx-2 rounded-md hover:bg-red-500 transition-colors"
-              onClick={() =>
-                writeContracts({
-                  contracts: [
-                    {
-                      address: "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
-                      abi,
-                      functionName: "approve",
-                      args: [SENDER_ADDRESS, parseUnits("1", 1)],
-                    },
-                    {
-                      address: "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
-                      abi,
-                      functionName: "transferFrom",
-                      args: [RECIPIENT_ADDRESS, parseUnits("10", -6)],
-                    },
-                  ],
-                })
-              }
-            >
-              SEND USDC
-            </button>
+            <div className="mt-4">
+          <input
+            type="text"
+            value={usdcAmount}
+            onChange={(e) => setUsdcAmount(e.target.value)}
+            placeholder="USDC Amount"
+            className="p-2 border rounded mr-2"
+          />
+          <button
+            className="bg-red-400 text-white p-4 rounded-md hover:bg-red-500 transition-colors disabled:bg-gray-400"
+            onClick={handleSendUSDC}
+            disabled={isPending || !usdcAmount}
+          >
+            {isPending ? 'Sending...' : 'Send USDC'}
+          </button>
+        </div>
           </>
         )}
 
