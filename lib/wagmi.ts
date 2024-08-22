@@ -15,6 +15,7 @@ export const config = createConfig({
   },
   connectors: [
     safe({
+      //TODO: change this to the actual domain of coinshift apps
       allowedDomains: [/.*/], // Allow all domains
       debug: false,
     }),

@@ -21,7 +21,7 @@ export default function Main() {
             <img src="/logo.png" alt="logo" />
           </div>
         </div>
-        <h1 className="text-4xl font-bold mb-4">Onboard the world</h1>
+        <h1 className="text-4xl font-bold mb-4">Testing Safe Connectors</h1>
         <Connect/>
         {address && (
         <>
