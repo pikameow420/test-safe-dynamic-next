@@ -47,11 +47,12 @@ import {
         <div>
           {activeConnector && (
             <>
-              <button onClick={() => disconnect()}>Disconnect from {activeConnector.name}</button>
-              <button onClick={() => writeContract(data!.request)}>
-                Test WagmiMintExample write contract transaction
+              <p>Connected to {activeConnector.name}</p>
+              <button className="bg-blue-500 text-white p-2 rounded-md" onClick={() => disconnect()}>Disconnect from {activeConnector.name}</button>
+              <button className="bg-blue-500 text-white p-2 rounded-md" onClick={() => writeContract(data!.request)}>
+                Test Wagmi Mint Example write contract transaction
               </button>
-              <button
+              <button className="bg-blue-500 text-white p-2 rounded-md" 
                 onClick={() =>
                   sendTransactionAsync?.({
                     gas: txGasEstimate,

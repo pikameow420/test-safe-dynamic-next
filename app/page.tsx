@@ -1,17 +1,17 @@
 "use client";
 
+import { useAccount, useConnect, useDisconnect, useEstimateGas } from "wagmi";
 import {
   DynamicConnectButton,
   DynamicWidget,
   useDynamicContext,
 } from "../lib/dynamic";
 import { useAutoConnect } from "./useAutoConnect";
+import { Account, Connect, NetworkSwitcher } from "./components";
 
 export default function Main() {
-  useAutoConnect();
 
-  const { user } = useDynamicContext();
-
+  const { address } = useAccount();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black flex flex-col items-center justify-center text-white">
@@ -22,18 +22,11 @@ export default function Main() {
           </div>
         </div>
         <h1 className="text-4xl font-bold mb-4">Onboard the world</h1>
-        <p className="text-lg mb-16">
-          Web3 login for <span className="text-blue-400">everyone</span>.
-        </p>
-        {user ? (
-          <p className="text-lg mb-4">Connected: {user?.wallet}</p>
-
-        ) : (
-          <DynamicConnectButton>
-              <div className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 rounded-lg">
-                Connect
-              </div>
-          </DynamicConnectButton>
+        <Connect/>
+        {address && (
+        <>
+          <Account />
+          </>
         )}
       </div>
     </div>

@@ -1,7 +1,7 @@
 {
-    "short_name": "Next WAGMI",
-    "name": "Next Wagmi Safe App",
-    "description": "Describe your WAGMi Safe App here",
+    "short_name": "Next Test",
+    "name": "Next Test Safe App",
+    "description": "Describe your Next Test Safe App here",
     "icons": [
       {
         "src": "logo.png",
