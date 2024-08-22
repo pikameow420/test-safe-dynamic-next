@@ -27,6 +27,6 @@
     "wagmi": "2.9.6"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.3"
+    "tailwindcss": "^3.4.10"
   }
 }
