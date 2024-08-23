@@ -15,32 +15,37 @@ import { useWriteContracts } from "wagmi/experimental";
 import { parseAbi, parseUnits } from "viem";
 import { useSendUSDC } from "../useSendUSDC";
 import { useState } from "react";
+import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
+
 
 export function Connect() {
   useAutoConnect();
 
-
   const { connect, connectors, error } = useConnect();
   const { isConnecting, connector: activeConnector, address } = useAccount();
   const { disconnect } = useDisconnect();
-  const { sendUSDC, isPending, isError } = useSendUSDC()
-  const [usdcAmount, setUsdcAmount] = useState('')
+  const { sdk } =  useSafeAppsSDK();
 
+  const { sendUSDC, isPending, isError } = useSendUSDC();
+  const [usdcAmount, setUsdcAmount] = useState("");
 
   const { data: txGasEstimate } = useEstimateGas({
     to: "0x000000000000000000000000000000000000beef",
     value: BigInt("0"),
   });
 
-  const handleSendUSDC = async () => {
+  const handleSend = async () => {
     try {
-      await sendUSDC(usdcAmount)
-      console.log('USDC sent successfully!')
-      setUsdcAmount('')
-    } catch (error) {
-      console.error(error instanceof Error ? error.message : 'Transaction failed')
+      const transactions = await sendUSDC('100'); // 0.0001 USDC
+      const { safeTxHash } = await sdk.txs.send({
+        txs: transactions,
+      });
+      console.log('Transaction sent:', safeTxHash);
+    } catch (err) {
+      console.error('Failed to send transaction:', err);
     }
-  }
+  };
+
 
   const { sendTransactionAsync } = useSendTransaction();
 
@@ -65,8 +70,6 @@ export function Connect() {
 
   const { writeContract } = useWriteContract();
 
-
-
   return (
     <div>
       <div>
@@ -78,15 +81,15 @@ export function Connect() {
             >
               Disconnect from {activeConnector.name}
             </button>
-            
+
             {/* Mint Transaction */}
-            <button 
+            <button
               className="bg-blue-500 text-white p-4 mx-2 rounded-md hover:bg-blue-600 transition-colors"
               onClick={() => writeContract(data!.request)}
             >
               Mint
             </button>
-            
+
             {/* Test Send Transaction : (view in events in EtherScan) */}
             <button
               className="bg-cyan-500 text-white p-4 mx-2 rounded-md hover:bg-cyan-600 transition-colors"
@@ -103,24 +106,23 @@ export function Connect() {
 
             {/* Batch transaction */}
             <div className="mt-4">
-          <input
-            type="text"
-            value={usdcAmount}
-            onChange={(e) => setUsdcAmount(e.target.value)}
-            placeholder="USDC Amount"
-            className="p-2 border rounded mr-2"
-          />
-          <button
-            className="bg-red-400 text-white p-4 rounded-md hover:bg-red-500 transition-colors disabled:bg-gray-400"
-            onClick={handleSendUSDC}
-            disabled={isPending || !usdcAmount}
-          >
-            {isPending ? 'Sending...' : 'Send USDC'}
-          </button>
-        </div>
+              <input
+                type="text"
+                value={usdcAmount}
+                onChange={(e) => setUsdcAmount(e.target.value)}
+                placeholder="USDC Amount"
+                className="p-2 border rounded mr-2 text-black"
+              />
+              <button
+                className="bg-red-400 text-white p-4 rounded-md hover:bg-red-500 transition-colors disabled:bg-gray-400"
+                onClick={handleSend}
+                disabled={isPending || !usdcAmount}
+              >
+                {isPending ? "Sending..." : "Send USDC"}
+              </button>
+            </div>
           </>
         )}
-
       </div>
 
       {error && <div className="text-red-500 mt-4">{error.message}</div>}
