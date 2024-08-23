@@ -2,11 +2,8 @@ import { useState } from 'react';
 import { useAccount } from "wagmi";
 import { parseUnits, encodeFunctionData } from 'viem'
 import { BaseTransaction } from '@safe-global/safe-apps-sdk'
-
-const USDC_ABI = [
-  "function approve(address spender, uint256 amount) returns (bool)",
-  "function transfer(address recipient, uint256 amount) returns (bool)",
-] as const;
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+import { USDC_ABI } from './constants/usdc-abi';
 
 export const useSendUSDC = () => {
   const { address } = useAccount();
@@ -31,7 +28,7 @@ export const useSendUSDC = () => {
         throw new Error("Missing variables");
       }
 
-      const parsedAmount = parseUnits(amount, -6); //Converting to micro USDC, the lowest fraction
+      const parsedAmount = parseUnits(amount, 6); //Converting to micro USDC, the lowest fraction
 
       const transactions: BaseTransaction[] = [
         {
