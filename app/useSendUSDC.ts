@@ -18,7 +18,7 @@ export const useSendUSDC = () => {
 
     try {
       if (!address) throw new Error("Wallet not connected");
-      if (isNaN(Number(amount)) || Number(amount) <= 0)
+      if (Number(amount) <= 0)
         throw new Error("Invalid amount");
 
       const USDC_CONTRACT = "0xaf88d065e77c8cc2239327c5edb3a432268e5831";
@@ -28,7 +28,7 @@ export const useSendUSDC = () => {
         throw new Error("Missing variables");
       }
 
-      const parsedAmount = parseUnits(amount, 6); //Converting to micro USDC, the lowest fraction
+      const parsedAmount = parseUnits(amount, 6); //Converting from microUSDC to
 
       const transactions: BaseTransaction[] = [
         {

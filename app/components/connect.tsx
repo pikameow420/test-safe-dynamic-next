@@ -36,7 +36,7 @@ export function Connect() {
 
   const handleSend = async () => {
     try {
-      const transactions = await sendUSDC('100'); // 0.0001 USDC
+      const transactions = await sendUSDC(usdcAmount); 
       const { safeTxHash } = await sdk.txs.send({
         txs: transactions,
       });
@@ -112,6 +112,8 @@ export function Connect() {
                 onChange={(e) => setUsdcAmount(e.target.value)}
                 placeholder="USDC Amount"
                 className="p-2 border rounded mr-2 text-black"
+                min={0}
+                step={0.000001}
               />
               <button
                 className="bg-red-400 text-white p-4 rounded-md hover:bg-red-500 transition-colors disabled:bg-gray-400"
