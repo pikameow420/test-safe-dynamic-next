@@ -40,23 +40,23 @@ export function BatchTransaction() {
     return baseUrl ? `${baseUrl}/tx/${hash}` : null;
   };
 
-  const isSafeApp = activeConnector && activeConnector.name === "safe";
-
   return (
+    <div>
       <div>
-      <div>
-      {!activeConnector ? (
-        <div className="flex flex-col items-center justify-center mt-4">
-          <p className="text-white mb-4">Please connect your wallet to continue</p>
-          <DynamicConnectButton>
+        {!activeConnector ? (
+          <div className="flex flex-col items-center justify-center mt-4">
+            <p className="text-white mb-4">
+              Please connect your wallet to continue
+            </p>
+            <DynamicConnectButton buttonClassName="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-400 transition-colors border border-white">
               Connect
-          </DynamicConnectButton>
-        </div>
-      ) : !(activeConnector.name === "safe") ? (
-        <div className="text-red-500 mt-4 p-4 border border-red-500 rounded">
-          Please open this app inside Safe or Coinshift to use it.
-        </div>
-      ) : (
+            </DynamicConnectButton>
+          </div>
+        ) : !(activeConnector.name === "safe") ? (
+          <div className="text-red-500 mt-4 p-4 border border-red-500 rounded">
+            Please open this app inside Safe or Coinshift to use it.
+          </div>
+        ) : (
           <>
             {address && (
               <div className=" text-white mx-2 rounded-md flex absolute top-4 right-4 justify-center items-center gap-x-4">
