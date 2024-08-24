@@ -3,10 +3,13 @@
 
 import { BatchTransaction } from "./components";
 import Image from "next/image";
+import { IsBrowser } from "@dynamic-labs/sdk-react-core";
+
 
 export default function Main() {
 
   return (
+    <IsBrowser>
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black flex flex-col items-center justify-center text-white">
       <div className="flex flex-col items-center justify-center text-center">
         <div className="mb-6">
@@ -18,5 +21,6 @@ export default function Main() {
         <BatchTransaction />
       </div>
     </div>
+    </IsBrowser>
   );
 }
