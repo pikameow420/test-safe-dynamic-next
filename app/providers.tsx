@@ -10,6 +10,7 @@ import {
   EthereumWalletConnectors,
   DynamicWagmiConnector,
 } from "@/lib/dynamic";
+import { url } from "inspector";
 
 const queryClient = new QueryClient();
 
@@ -22,11 +23,22 @@ export function Providers(props: { children: ReactNode }) {
         walletConnectors: [EthereumWalletConnectors],
         initialAuthenticationMode: "connect-only",
         enableConnectOnlyFallback: true,
+        appLogoUrl : '/logo.svg',
+        appName : "Safe with Dynamic",
+        recommendedWallets : [
+          {walletKey : 'safe', label : 'Safe'},
+          {walletKey : 'coinbase', label : 'Coinbase'},
+          {walletKey : 'metamask', label : 'MetaMask'},
+          {walletKey : 'walletConnect', label : 'WalletConnect'},
+          {walletKey : 'rainbow', label : 'Rainbow'},
+          {walletKey : 'coinbase', label : 'Coinbase'},
+        ],
+        toolkitEnabled: true,
         handlers: {
           handleConnectedWallet: async (wallet) => {   
             console.log("handleConnectedWallet was called", wallet);
             // Check if the connected wallet is Safe
-            if (wallet.connector?.name === 'safe') {
+            if (wallet.connector?.key === 'safe') {
                 // Automatically connect using the Safe connector
                 console.log("Safe connector found");
             }

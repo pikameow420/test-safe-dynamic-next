@@ -6,7 +6,10 @@ import { useAutoConnect } from "../useAutoConnect";
 import { useSendUSDC } from "../useSendUSDC";
 import { useState } from "react";
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
-import { DynamicConnectButton, DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import {
+  DynamicConnectButton,
+  DynamicWidget,
+} from "@dynamic-labs/sdk-react-core";
 
 export function BatchTransaction() {
   useAutoConnect();
@@ -55,8 +58,21 @@ export function BatchTransaction() {
             >
               Disconnect
             </button>
-            <DynamicWidget/>
-            <DynamicConnectButton buttonClassName="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors">Meow</DynamicConnectButton>
+            <DynamicWidget
+              innerButtonComponent={
+                <button
+                  onClick={() => {
+                    console.log("Dynamic Connect was clicked");
+                    console.log(activeConnector);
+                    console.log(activeConnector?.id);
+                    autoConnect();
+                  }}
+                  className="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Dynamic Connect
+                </button>
+              }
+            />
           </div>
         ) : (
           <DynamicConnectButton buttonClassName="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
