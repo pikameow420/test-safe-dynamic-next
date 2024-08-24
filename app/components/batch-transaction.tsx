@@ -64,11 +64,11 @@ export function BatchTransaction() {
             <DynamicWidget
               innerButtonComponent={
                 <button
-                  onClick={() => {
+                  onClick={async () => {
+                    await autoConnect();
                     console.log("Dynamic Connect was clicked");
                     console.log(activeConnector);
                     console.log(activeConnector?.id);
-                    autoConnect();
                   }}
                   className="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors"
                 >
@@ -86,6 +86,7 @@ export function BatchTransaction() {
       ) : address ? (
         <>
           {/* Batch transaction : We shall execute approve and execute in 1 transaction. This will also resolve the issue of having to provide infinite approvals. */}
+          <DynamicWidget />
           <div className="mt-4">
             <input
               type="text"
