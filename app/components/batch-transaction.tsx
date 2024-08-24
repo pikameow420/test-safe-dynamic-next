@@ -43,33 +43,32 @@ export function BatchTransaction() {
   return (
     <div>
       <div>
-        {activeConnector?.id != "safe" ? (
-          <div className="text-red-500 mt-4 p-4 border border-red-500 rounded">
-            Please open this app inside Safe or Coinshift to use it.
+      {address ? (
+          <div>
+            <div className="text-white p-2 text-md">
+              {ensNameData ?? address}
+              {ensNameData ? ` (${address})` : null}
+            </div>
+            <button
+              className="bg-gray-00 border border-white text-white p-2 rounded-md hover:bg-red-500 transition-colors"
+              onClick={() => disconnect()}
+            >
+              Disconnect
+            </button>
           </div>
         ) : (
-          <>
-            <div className=" text-white mx-2 rounded-md flex absolute top-4 right-4 justify-center items-center gap-x-4">
-              {address ? (
-                <div>
-                  <div className=" text-white p-2 text-md">
-                    {ensNameData ?? address}
-                    {ensNameData ? ` (${address})` : null}
-                  </div>
-                  <button
-                    className="bg-gray-00 border border-white text-white p-2 rounded-md hover:bg-red-500 transition-colors"
-                    onClick={() => disconnect()}
-                  >
-                    Disconnect
-                  </button>
-                </div>
-              ) : (
-                <DynamicConnectButton buttonClassName="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
-                  Connect Wallet
-                </DynamicConnectButton>
-              )}
-            </div>
-
+          <DynamicConnectButton buttonClassName="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
+            Connect Wallet
+          </DynamicConnectButton>
+        )}
+      </div>
+            
+            {address && activeConnector?.id !== "safe" ? (
+        <div className="text-red-500 mt-4 p-4 border border-red-500 rounded">
+          Please open this app inside Safe or Coinshift to use it.
+        </div>
+      ) : address ? (
+        <>
             {/* Batch transaction : We shall execute approve and execute in 1 transaction. This will also resolve the issue of having to provide infinite approvals. */}
             <div className="mt-4">
               <input
@@ -100,10 +99,9 @@ export function BatchTransaction() {
                   View transaction on block explorer
                 </a>
               </div>
-            )}
+          )}
           </>
-        )}
-      </div>
+        ) : null}
       {connectError && (
         <div className="text-red-500 mt-4">{connectError.message}</div>
       )}
