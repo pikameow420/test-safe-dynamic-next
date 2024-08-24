@@ -6,7 +6,7 @@ import { useAutoConnect } from "../useAutoConnect";
 import { useSendUSDC } from "../useSendUSDC";
 import { useState } from "react";
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
-import { DynamicConnectButton } from "@dynamic-labs/sdk-react-core";
+import { DynamicConnectButton, DynamicWidget } from "@dynamic-labs/sdk-react-core";
 
 export function BatchTransaction() {
   useAutoConnect();
@@ -44,18 +44,7 @@ export function BatchTransaction() {
     <div>
       <div>
       {address ? (
-          <div>
-            <div className="text-white p-2 text-md">
-              {ensNameData ?? address}
-              {ensNameData ? ` (${address})` : null}
-            </div>
-            <button
-              className="bg-gray-00 border border-white text-white p-2 rounded-md hover:bg-red-500 transition-colors"
-              onClick={() => disconnect()}
-            >
-              Disconnect
-            </button>
-          </div>
+          <DynamicWidget/>
         ) : (
           <DynamicConnectButton buttonClassName="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
             Connect Wallet
