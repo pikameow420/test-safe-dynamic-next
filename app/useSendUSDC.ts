@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useAccount } from "wagmi";
 import { parseUnits, encodeFunctionData } from 'viem'
 import { BaseTransaction } from '@safe-global/safe-apps-sdk'
-import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 import { USDC_ABI } from './constants/usdc-abi';
 
 

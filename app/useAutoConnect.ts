@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import { useConnect } from 'wagmi'
 
-const AUTOCONNECTED_CONNECTOR_IDS = ['safe','coinshift']
+const AUTOCONNECTED_CONNECTOR_IDS = ['safe']
 
 function useAutoConnect() {
   const { connect, connectors } = useConnect()

@@ -40,11 +40,15 @@ export function BatchTransaction() {
   };
 
   return (
-    <div >
       <div>
-        { activeConnector &&  (
+      <div>
+      {!(activeConnector && (activeConnector.name === "safe")) ? (
+        <div className="text-red-500 mt-4 p-4 border border-red-500 rounded">
+          Please open this app inside Safe or Coinshift to use it.
+        </div>
+      ) : (
           <>
-            { (
+            (
               <div className=" text-white mx-2 rounded-md flex absolute top-4 right-4 justify-center items-center gap-x-4">
                 <div className=" text-white p-2 text-md">
                   {ensNameData ?? address}
@@ -57,7 +61,7 @@ export function BatchTransaction() {
                   Disconnect
                 </button>
               </div>
-            )}
+            )
 
             {/* Batch transaction : We shall execute approve and execute in 1 transaction. This will also resolve the issue of having to provide infinite approvals. */}
             <div className="mt-4">
