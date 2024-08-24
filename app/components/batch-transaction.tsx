@@ -1,12 +1,12 @@
 "use client";
 
 import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
-import { DynamicConnectButton } from "@dynamic-labs/sdk-react-core";
 
 import { useAutoConnect } from "../useAutoConnect";
 import { useSendUSDC } from "../useSendUSDC";
 import { useState } from "react";
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
+import { DynamicConnectButton } from "@dynamic-labs/sdk-react-core";
 
 export function BatchTransaction() {
   useAutoConnect();
@@ -43,35 +43,32 @@ export function BatchTransaction() {
   return (
     <div>
       <div>
-        {!activeConnector ? (
-          <div className="flex flex-col items-center justify-center mt-4">
-            <p className="text-white mb-4">
-              Please connect your wallet to continue
-            </p>
-            <DynamicConnectButton buttonClassName="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-400 transition-colors border border-white">
-              Connect
-            </DynamicConnectButton>
-          </div>
-        ) : !(activeConnector.name === "safe") ? (
+        {activeConnector?.id != "safe" ? (
           <div className="text-red-500 mt-4 p-4 border border-red-500 rounded">
             Please open this app inside Safe or Coinshift to use it.
           </div>
         ) : (
           <>
-            {address && (
-              <div className=" text-white mx-2 rounded-md flex absolute top-4 right-4 justify-center items-center gap-x-4">
-                <div className=" text-white p-2 text-md">
-                  {ensNameData ?? address}
-                  {ensNameData ? ` (${address})` : null}
+            <div className=" text-white mx-2 rounded-md flex absolute top-4 right-4 justify-center items-center gap-x-4">
+              {address ? (
+                <div>
+                  <div className=" text-white p-2 text-md">
+                    {ensNameData ?? address}
+                    {ensNameData ? ` (${address})` : null}
+                  </div>
+                  <button
+                    className="bg-gray-00 border border-white text-white p-2 rounded-md hover:bg-red-500 transition-colors"
+                    onClick={() => disconnect()}
+                  >
+                    Disconnect
+                  </button>
                 </div>
-                <button
-                  className="bg-gray-00 border border-white text-white p-2 rounded-md hover:bg-red-500 transition-colors"
-                  onClick={() => disconnect()}
-                >
-                  Disconnect
-                </button>
-              </div>
-            )}
+              ) : (
+                <DynamicConnectButton buttonClassName="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
+                  Connect Wallet
+                </DynamicConnectButton>
+              )}
+            </div>
 
             {/* Batch transaction : We shall execute approve and execute in 1 transaction. This will also resolve the issue of having to provide infinite approvals. */}
             <div className="mt-4">
