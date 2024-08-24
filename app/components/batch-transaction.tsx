@@ -59,6 +59,8 @@ export function BatchTransaction() {
             >
               Disconnect
             </button>
+          </div>
+        ) : (
             <DynamicWidget
               innerButtonComponent={
                 <button
@@ -74,11 +76,6 @@ export function BatchTransaction() {
                 </button>
               }
             />
-          </div>
-        ) : (
-          <DynamicConnectButton buttonClassName="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
-            Connect Wallet
-          </DynamicConnectButton>
         )}
       </div>
 
