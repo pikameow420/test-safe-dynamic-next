@@ -44,7 +44,7 @@ export function BatchTransaction() {
       <div>
         { activeConnector &&  (
           <>
-            { address && (
+            { (
               <div className=" text-white mx-2 rounded-md flex absolute top-4 right-4 justify-center items-center gap-x-4">
                 <div className=" text-white p-2 text-md">
                   {ensNameData ?? address}
