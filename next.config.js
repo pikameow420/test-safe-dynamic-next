@@ -26,7 +26,7 @@ const nextConfig = {
                     },
                     {
                         key: 'Content-Security-Policy',
-                        value: 'frame-ancestors "self" https://app.safe.global https://*.coinshift.xyz;',
+                        value: 'frame-ancestors "self" https://app.safe.global https://*.coinshift.global;',
                     },
                 ],
             },
