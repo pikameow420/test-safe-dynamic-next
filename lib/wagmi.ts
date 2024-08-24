@@ -14,7 +14,7 @@ export const config = createConfig({
 
   connectors: [
     safe({
-      allowedDomains: [/^app\.safe\.global$/, /^*\.coinshift\.xyz$/],
+      allowedDomains: [/^app\.safe\.global$/, /^\.coinshift\.xyz$/],
     }),
     injected(),
   ],

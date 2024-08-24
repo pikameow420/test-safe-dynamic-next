@@ -10,7 +10,6 @@ import {
   EthereumWalletConnectors,
   DynamicWagmiConnector,
 } from "@/lib/dynamic";
-import { useAutoConnect } from "./useAutoConnect";
 
 const queryClient = new QueryClient();
 

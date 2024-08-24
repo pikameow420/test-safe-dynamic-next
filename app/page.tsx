@@ -11,7 +11,7 @@ export default function Main() {
       <div className="flex flex-col items-center justify-center text-center">
         <div className="mb-6">
           <div className="inline-flex items-center justify-center">
-            <Image src="/logo.svg" className="shadow-inner h-24 w-24" alt="logo"/>
+            <Image src="/logo.svg" width={100} height={100} alt="logo"/>
           </div>
         </div>
         <h1 className="text-4xl font-bold mb-4">Testing Safe with Dynamic</h1>
