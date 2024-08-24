@@ -21,6 +21,7 @@ export function BatchTransaction() {
   const { sendUSDC, isPending, isError } = useSendUSDC();
   const [usdcAmount, setUsdcAmount] = useState("");
   const [txHash, setTxHash] = useState<string | null>(null);
+  const { autoConnect } = useAutoConnect();
 
   const { data: ensNameData } = useEnsName({ address });
 
