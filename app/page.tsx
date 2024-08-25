@@ -25,11 +25,15 @@ export default function Main() {
         {/* <BatchTransaction /> */}
         <h2 className="text-2xl font-semibold mb-2">Available Wallets:</h2>
         <ul className="list-disc list-inside">
-        {walletConnectorOptions
-    .filter(wallet => wallet.isInstalledOnBrowser)
-    .map((wallet, index) => (
-      <li key={index} className="text-lg">{wallet.key}</li>
-    ))}
+         {walletConnectorOptions.map((wallet, index) => {
+  console.log('Wallet details:', wallet);
+  return (
+    <li key={index} className="text-lg">
+      {wallet.key} - {wallet.name} - 
+      Installed: {String(wallet.isInstalledOnBrowser)}
+    </li>
+  );
+})}
           </ul>
           </div>
     </div>
