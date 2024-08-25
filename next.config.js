@@ -10,11 +10,11 @@ const nextConfig = {
     async headers() {
         return [
             {
-                source: '/:path*',  
+                source: '/manifest.json',  
                 headers: [
                     {
                         key: 'Access-Control-Allow-Origin',
-                        value: '*',
+                        value: 'https://app.safe.global',
                     },
                     {
                         key: 'Access-Control-Allow-Methods',
