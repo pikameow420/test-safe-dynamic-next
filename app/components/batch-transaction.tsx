@@ -7,12 +7,12 @@ import { useSendUSDC } from "../useSendUSDC";
 import { useState } from "react";
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import {
+  DynamicConnectButton,
   DynamicWidget,
 } from "@dynamic-labs/sdk-react-core";
 
-
 export function BatchTransaction() {
-  // useAutoConnect();
+  useAutoConnect();
 
   const { error: connectError } = useConnect();
   const { connector: activeConnector, chain, address } = useAccount();
@@ -21,7 +21,7 @@ export function BatchTransaction() {
   const { sendUSDC, isPending, isError } = useSendUSDC();
   const [usdcAmount, setUsdcAmount] = useState("");
   const [txHash, setTxHash] = useState<string | null>(null);
-  const { autoConnect } = useAutoConnect();
+
   const { data: ensNameData } = useEnsName({ address });
 
   const handleSend = async () => {
@@ -46,7 +46,7 @@ export function BatchTransaction() {
   return (
     <div>
       <div>
-        {address ? (
+        {/* {address ? (
           <div>
             <div className="text-white p-2 text-md">
               {ensNameData ?? address}
@@ -58,24 +58,17 @@ export function BatchTransaction() {
             >
               Disconnect
             </button>
+
           </div>
         ) : (
-            <DynamicWidget
-              innerButtonComponent={
-                <button
-                  onClick={async () => {
-                    await autoConnect();
-                    console.log("Dynamic Connect was clicked");
-                    console.log(activeConnector);
-                    console.log(activeConnector?.id);
-                  }}
-                  className="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  Dynamic Connect
-                </button>
-              }
-            />
-        )}
+          <DynamicWidget
+          innerButtonComponent={
+            <button className="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
+              Dynamic Connect
+            </button>
+          }
+        />
+        )} */}
       </div>
 
       {address && activeConnector?.id !== "safe" ? (
@@ -85,7 +78,6 @@ export function BatchTransaction() {
       ) : address ? (
         <>
           {/* Batch transaction : We shall execute approve and execute in 1 transaction. This will also resolve the issue of having to provide infinite approvals. */}
-          <DynamicWidget />
           <div className="mt-4">
             <input
               type="text"
