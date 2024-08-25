@@ -7,12 +7,12 @@ import { useSendUSDC } from "../useSendUSDC";
 import { useState } from "react";
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import {
-  DynamicConnectButton,
   DynamicWidget,
 } from "@dynamic-labs/sdk-react-core";
 
+
 export function BatchTransaction() {
-  useAutoConnect();
+  // useAutoConnect();
 
   const { error: connectError } = useConnect();
   const { connector: activeConnector, chain, address } = useAccount();
@@ -22,7 +22,6 @@ export function BatchTransaction() {
   const [usdcAmount, setUsdcAmount] = useState("");
   const [txHash, setTxHash] = useState<string | null>(null);
   const { autoConnect } = useAutoConnect();
-
   const { data: ensNameData } = useEnsName({ address });
 
   const handleSend = async () => {

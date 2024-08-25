@@ -1,5 +1,6 @@
 "use client";
 
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 import { useEffect, useCallback } from 'react'
 import { useConnect } from 'wagmi'
 
@@ -7,6 +8,7 @@ const AUTOCONNECTED_CONNECTOR_IDS = ['safe']
 
 function useAutoConnect() {
   const { connect, connectors } = useConnect()
+
 
   const autoConnect = useCallback(() => {
     AUTOCONNECTED_CONNECTOR_IDS.forEach((connector) => {

@@ -10,7 +10,6 @@ import {
   EthereumWalletConnectors,
   DynamicWagmiConnector,
 } from "@/lib/dynamic";
-import { url } from "inspector";
 
 const queryClient = new QueryClient();
 
@@ -35,7 +34,8 @@ export function Providers(props: { children: ReactNode }) {
         ],
         toolkitEnabled: true,
         handlers: {
-          handleConnectedWallet: async (wallet) => {   
+
+          handleConnectedWallet: async (wallet) => { 
             console.log("handleConnectedWallet was called", wallet);
             // Check if the connected wallet is Safe
             if (wallet.connector?.key === 'safe') {
@@ -43,7 +43,7 @@ export function Providers(props: { children: ReactNode }) {
                 console.log("Safe connector found");
             }
             
-            return true; // Allow the connection
+            return true; 
           },
         }
       }}

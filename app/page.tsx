@@ -3,10 +3,14 @@
 
 import { BatchTransaction } from "./components";
 import Image from "next/image";
-import { IsBrowser } from "@dynamic-labs/sdk-react-core";
+import { IsBrowser, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 
 export default function Main() {
+
+  const { walletConnectorOptions } = useDynamicContext();
+
+
 
   return (
     <IsBrowser>
@@ -18,8 +22,16 @@ export default function Main() {
           </div>
         </div>
         <h1 className="text-4xl font-bold mb-4">Testing Safe with Dynamic</h1>
-        <BatchTransaction />
-      </div>
+        {/* <BatchTransaction /> */}
+        <h2 className="text-2xl font-semibold mb-2">Available Wallets:</h2>
+        <ul className="list-disc list-inside">
+        {walletConnectorOptions
+    .filter(wallet => wallet.isInstalledOnBrowser)
+    .map((wallet, index) => (
+      <li key={index} className="text-lg">{wallet.key}</li>
+    ))}
+          </ul>
+          </div>
     </div>
     </IsBrowser>
   );
