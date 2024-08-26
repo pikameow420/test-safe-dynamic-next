@@ -7,7 +7,7 @@ import { USDC_ABI } from './constants/usdc-abi';
 
 
 export const useSendUSDC = () => {
-  const { address, chain } = useAccount();
+  const { isConnected } = useAccount();
   const [isPending, setIsPending] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -17,7 +17,7 @@ export const useSendUSDC = () => {
     setError(null);
 
     try {
-      if (!address) throw new Error("Wallet not connected");
+      if (!isConnected) throw new Error("Wallet not connected");
       if (Number(amount) <= 0)
         throw new Error("Invalid amount");
 
