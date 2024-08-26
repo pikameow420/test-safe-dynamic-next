@@ -19,7 +19,7 @@ export function Providers(props: { children: ReactNode }) {
       settings={{
         environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID || "",
         walletConnectors: [EthereumWalletConnectors],
-        initialAuthenticationMode: "connect-only",
+        initialAuthenticationMode: "connect-and-sign",
         enableConnectOnlyFallback: true,
         appLogoUrl : '/logo.svg',
         appName : "Safe with Dynamic",
@@ -31,18 +31,6 @@ export function Providers(props: { children: ReactNode }) {
           {walletKey : 'rainbow', label : 'Rainbow'},
           {walletKey : 'coinbase', label : 'Coinbase'},
         ],
-        handlers: {
-
-          handleConnectedWallet: async (wallet) => { 
-            console.log("handleConnectedWallet was called", wallet);
-            // Check if the connected wallet is Safe
-            if (wallet.connector?.key === 'safe') {
-                // Automatically connect using the Safe connector
-                console.log("Safe connector found");
-            }
-            return true; 
-          },
-        }
       }}
     >
       <WagmiProvider config={config} reconnectOnMount>
