@@ -1,28 +1,17 @@
 "use client";
 
-import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
-
-import { useAutoConnect } from "../useAutoConnect";
+import { useAccount } from "wagmi";
 import { useSendUSDC } from "../useSendUSDC";
 import { useState } from "react";
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
-import {
-  DynamicConnectButton,
-  DynamicWidget,
-} from "@dynamic-labs/sdk-react-core";
 
 export function BatchTransaction() {
-  useAutoConnect();
 
-  const { error: connectError } = useConnect();
-  const { connector: activeConnector, chain, address } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { connector: activeConnector, chain, isConnected } = useAccount();
   const { sdk } = useSafeAppsSDK();
   const { sendUSDC, isPending, isError } = useSendUSDC();
   const [usdcAmount, setUsdcAmount] = useState("");
   const [txHash, setTxHash] = useState<string | null>(null);
-
-  const { data: ensNameData } = useEnsName({ address });
 
   const handleSend = async () => {
     try {
@@ -45,37 +34,11 @@ export function BatchTransaction() {
 
   return (
     <div>
-      <div>
-        {/* {address ? (
-          <div>
-            <div className="text-white p-2 text-md">
-              {ensNameData ?? address}
-              {ensNameData ? ` (${address})` : null}
-            </div>
-            <button
-              className="bg-gray-00 border border-white text-white p-2 rounded-md hover:bg-red-500 transition-colors"
-              onClick={() => disconnect()}
-            >
-              Disconnect
-            </button>
-
-          </div>
-        ) : (
-          <DynamicWidget
-          innerButtonComponent={
-            <button className="bg-blue-400 border border-white text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
-              Dynamic Connect
-            </button>
-          }
-        />
-        )} */}
-      </div>
-
-      {address && activeConnector?.id !== "safe" ? (
+      { isConnected && activeConnector?.id !== "safe" ? (
         <div className="text-red-500 mt-4 p-4 border border-red-500 rounded">
-          Please open this app inside Safe or Coinshift to use it.
+          Please open this app inside Safe or Coinshift to try out batch transactions.
         </div>
-      ) : address ? (
+      ) : (
         <>
           {/* Batch transaction : We shall execute approve and execute in 1 transaction. This will also resolve the issue of having to provide infinite approvals. */}
           <div className="mt-4">
@@ -109,10 +72,8 @@ export function BatchTransaction() {
             </div>
           )}
         </>
-      ) : null}
-      {connectError && (
-        <div className="text-red-500 mt-4">{connectError.message}</div>
-      )}
+      )} 
+
       {isError && <div className="text-red-500 mt-4">Error sending USDC</div>}
     </div>
   );

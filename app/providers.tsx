@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { type ReactNode } from "react";
-import { useConnect, WagmiProvider } from "wagmi";
+import {  WagmiProvider } from "wagmi";
 import SafeProvider from '@safe-global/safe-apps-react-sdk'
 import { config } from "@/lib/wagmi";
 import {
@@ -10,10 +10,9 @@ import {
   EthereumWalletConnectors,
   DynamicWagmiConnector,
 } from "@/lib/dynamic";
-
 const queryClient = new QueryClient();
-
 export function Providers(props: { children: ReactNode }) {
+
 
   return (
     <DynamicContextProvider
@@ -32,7 +31,6 @@ export function Providers(props: { children: ReactNode }) {
           {walletKey : 'rainbow', label : 'Rainbow'},
           {walletKey : 'coinbase', label : 'Coinbase'},
         ],
-        toolkitEnabled: true,
         handlers: {
 
           handleConnectedWallet: async (wallet) => { 
@@ -42,15 +40,14 @@ export function Providers(props: { children: ReactNode }) {
                 // Automatically connect using the Safe connector
                 console.log("Safe connector found");
             }
-            
             return true; 
           },
         }
       }}
     >
-      <WagmiProvider config={config}>
+      <WagmiProvider config={config} reconnectOnMount>
         <QueryClientProvider client={queryClient}>
-          <DynamicWagmiConnector suppressChainMismatchError>
+          <DynamicWagmiConnector>
           <SafeProvider>
             {props.children}
             </SafeProvider>
