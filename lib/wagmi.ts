@@ -4,7 +4,7 @@ import { injected, safe } from "wagmi/connectors";
 
 export const config = createConfig({
   chains: [mainnet, arbitrum],
-  multiInjectedProviderDiscovery: true,
+  multiInjectedProviderDiscovery: false,
   transports: {
     [mainnet.id]: http(),
     [arbitrum.id]: http(),

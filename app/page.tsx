@@ -16,9 +16,9 @@ export default function Main() {
             <Image src="/logo.svg" width={100} height={100} alt="logo"/>
           </div>
         </div>
-        <h1 className="text-4xl font-bold mb-4">Testing Safe with Dynamic - Added Shim Disconnect</h1>
-        <DynamicWidget />
-        {isConnected && <BatchTransaction />}
+        <h1 className="text-4xl font-bold mb-4">Testing Safe with Dynamic - Added Shim </h1>
+         <DynamicWidget />
+         {isConnected && <BatchTransaction />}
       </div>
     </div>
   );
